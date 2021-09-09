@@ -1,39 +1,28 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
 
 
-s = Service("D:\SETUPS\chromedriver.exe")
-
-driver = webdriver.Chrome(service=s)
-
-#print(type(driver))
-
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.maximize_window()
 driver.get("https://www.thesparksfoundationsingapore.org/")
 
 sitetitle = driver.title
-
-#print(sitetitle)
-
-#assert "The Sparks Foundation | Home" in sitetitle
-#print("successful")
-
 
 # Test Case 1: Title Testing
 
 print("\nTest Case 1:Title Testing:")
 
 if sitetitle:
-    print("Title is present:",sitetitle)
+    print("Title is present:", sitetitle)
 else:
     print("Title not found")
 
 if sitetitle=="The Sparks Foundation | Home":
-    print("Present title verified sucessfully:",sitetitle)
+    print("Present title verified successfully:",sitetitle)
 else:
     print("Verification failed")
 
@@ -63,7 +52,7 @@ print("\nTest case 4: Back to Home Link testing:")
 
 try:
     driver.find_element(By.PARTIAL_LINK_TEXT,"The Sparks Foundation")
-    print("Sucessfully Visit back to Home Page")
+    print("Successfully Visit back to Home Page")
 except NoSuchElementException:
     print("Can't open Home Page")
 
@@ -147,9 +136,9 @@ except NoSuchElementException:
 print("\nTest case 8: Links page Testing:")
 
 try:
-    driver.find_element(By.LINK_TEXT,'LINKS').click()
+    driver.find_element(By.LINK_TEXT, 'LINKS').click()
     time.sleep(1)
-    driver.find_element(By.LINK_TEXT,'Software & App').click()
+    driver.find_element(By.LINK_TEXT, 'Software & App').click()
     time.sleep(1)
     driver.find_element(By.LINK_TEXT, 'Salient Features').click()
     time.sleep(1)
@@ -166,9 +155,9 @@ except NoSuchElementException:
 print("\nTest case 9: Join Us page Testing:")
 
 try:
-    driver.find_element(By.LINK_TEXT,'Join Us').click()
+    driver.find_element(By.LINK_TEXT, 'Join Us').click()
     time.sleep(1)
-    driver.find_element(By.LINK_TEXT,'Why Join Us').click()
+    driver.find_element(By.LINK_TEXT, 'Why Join Us').click()
     time.sleep(1)
     driver.find_element(By.LINK_TEXT, 'Expert Mentor').click()
     time.sleep(1)
@@ -190,7 +179,7 @@ except NoSuchElementException:
 print("\nTest Case 10: Contact Us page Testing")
 
 try:
-    driver.find_element(By.LINK_TEXT,"Contact Us")
+    driver.find_element(By.LINK_TEXT, "Contact Us")
     time.sleep(1)
     print("Contact Us page is available")
 except NoSuchElementException:
@@ -201,14 +190,14 @@ except NoSuchElementException:
 
 print("\nTest case 11: Contact Text Testing")
 try:
-    driver.find_element(By.LINK_TEXT,"Contact Us").click()
+    driver.find_element(By.LINK_TEXT, "Contact Us").click()
     time.sleep(1)
-    info1 = driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[3]/div[2]/p[1]')
+    info1 = driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[3]/div[2]/p[1]')
     info2 = driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[3]/div[2]/p[2]')
     time.sleep(1)
 
-    print("Info1:",info1.text)
-    print("Info2:",info2.text)
+    print("Info1:", info1.text)
+    print("Info2:", info2.text)
 
     if info1.text == "(for Non-Internship/GRIP Queries Only)" and info2.text == "+65-8402-8590, info@thesparksfoundation.sg":
         print('Info1 and Info2 are corrects!')
@@ -223,12 +212,12 @@ except NoSuchElementException:
 
 print("\nTest case 12: Address Text Testing")
 try:
-    driver.find_element(By.LINK_TEXT,"Contact Us").click()
+    driver.find_element(By.LINK_TEXT, "Contact Us").click()
     time.sleep(1)
-    info = driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[2]/div[2]/p')
+    info = driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[2]/div[2]/p')
     time.sleep(1)
 
-    print("Info:",info.text)
+    print("Info:", info.text)
     if info.text != info.text:
         print("Info is Incorrect")
     print("Contact Page Verification Successful!\n")
@@ -239,26 +228,23 @@ except NoSuchElementException:
 # TestCase 13: Check the Form
 print("\nTestCase 13:")
 try:
-    driver.find_element(By.LINK_TEXT,'Join Us').click()
+    driver.find_element(By.LINK_TEXT, 'Join Us').click()
     time.sleep(1)
-    driver.find_element(By.LINK_TEXT,'Why Join Us').click()
+    driver.find_element(By.LINK_TEXT, 'Why Join Us').click()
     time.sleep(1)
-    driver.find_element(By.NAME,'Name').send_keys('Shweta Thikekar')
+    driver.find_element(By.NAME, 'Name').send_keys('Shweta Thikekar')
     time.sleep(1)
-    driver.find_element(By.NAME,'Email').send_keys('shwetathikekar17@gmail.com')
+    driver.find_element(By.NAME, 'Email').send_keys('shwetathikekar17@gmail.com')
     time.sleep(1)
-    select = Select(driver.find_element(By.CLASS_NAME,'form-control'))
+    select = Select(driver.find_element(By.CLASS_NAME, 'form-control'))
     time.sleep(1)
     select.select_by_visible_text('Intern')
     time.sleep(1)
-    driver.find_element(By.CLASS_NAME,'button-w3layouts').click()
+    driver.find_element(By.CLASS_NAME, 'button-w3layouts').click()
     time.sleep(1)
     print("Form Verification Successful!\n")
 except NoSuchElementException:
     print("Form Verification Failed!\n")
     time.sleep(1)
-
-
-
 
 driver.quit()
